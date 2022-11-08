@@ -26,7 +26,6 @@ do
     --generate-ssh-keys \
     --vnet-name vm-vnet \
     --subnet subnet \
-    --public-ip-address "" \
     --availability-set vm-as \
 	  --nsg vm-nsg
 done
