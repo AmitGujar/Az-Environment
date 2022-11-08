@@ -13,3 +13,25 @@ az vm availability-set create \
   -n vm-as \
   -l northeurope \
   -g $group
+
+for NUM in 1 2
+do
+  az vm create \
+    -n machine$NUM \
+    -g $group \
+    -l northeurope \
+    --size Standard_B1s \
+    --image UbuntuLTS \
+    --admin-username azureuser \
+    --generate-ssh-keys \
+    --vnet-name vm-vnet \
+    --subnet subnet \
+    --public-ip-address "" \
+    --availability-set vm-as \
+	  --nsg vm-nsg
+done
+
+for NUM in 1 2
+do
+  az vm open-port -g $group --name machine$NUM --port 80
+done
