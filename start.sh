@@ -65,6 +65,5 @@ done
 
 for NUM in 1 2
 do
-  az vm open-port -g $group --name machine$NUM --port 80
+  az vm open-port -g $group --name machine$NUM --port 80 
 done
-
