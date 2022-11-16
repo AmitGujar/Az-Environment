@@ -1,9 +1,11 @@
 group=myLoadBalancer
 
+# Setting up public ip for load balancer
 az network public-ip create \
   -g $group \
   --name myPublicIP
 
+# Initializing the Load Balancer
 az network lb create \
   -g $group \
   --name myLoadBalancer \
@@ -11,6 +13,7 @@ az network lb create \
   --frontend-ip-name myFrontEnd \
   --backend-pool-name myBackendPool 
 
+# creating health probe
 az network lb probe create \
   -g $group \
   --lb-name myLoadBalancer \
@@ -18,6 +21,7 @@ az network lb probe create \
   --protocol tcp \
   --port 80 
 
+# creating load balancer rule
 az network lb rule create \
   -g $group \
   --lb-name myLoadBalancer \
@@ -31,6 +35,7 @@ az network lb rule create \
   --disable-outbound-snat true \
   --idle-timeout 15 \
 
+# configuring the ip for both nic of vms
 az network nic ip-config address-pool add \
   --address-pool myBackendPool \
   --ip-config-name ipconfigmachine1 \
