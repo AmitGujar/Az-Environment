@@ -29,16 +29,18 @@ az network lb rule create \
   --backend-pool-name myBackendPool \
   --probe-name myHealthProbe \
   --disable-outbound-snat true \
-  --idle-timeout 15 
+  --idle-timeout 15 \
 
-array = (machine1VMNic machine2VMNic)
+az network nic ip-config address-pool add \
+  --address-pool myBackendPool \
+  --ip-config-name ipconfigmachine1 \
+  --nic-name machine1VMNic \
+  -g $group \
+  --lb-name myLoadBalancer
 
-for vmnic in "${array[@]}"
-do 
-  az network nic ip-config address-pool add \
-    --address-pool myBackendPool \
-    --ip-config-name ipconfig1 \
-    --nic-name $vmnic \
-    -g $group \
-    --lb-name myLoadBalancer
-done 
+az network nic ip-config address-pool add \
+  --address-pool myBackendPool \
+  --ip-config-name ipconfigmachine2 \
+  --nic-name machine2VMNic \
+  -g $group \
+  --lb-name myLoadBalancer

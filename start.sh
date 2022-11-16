@@ -39,7 +39,7 @@ for NUM in 1 2
 do
   az vm run-command invoke \
     -g $group \
-    -n machine$NUM
+    -n machine$NUM \
     --command-id RunShellScript \
     --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
 done
