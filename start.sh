@@ -27,10 +27,19 @@ do
     --vnet-name vm-vnet \
     --subnet subnet \
     --availability-set vm-as \
-	    --nsg vm-nsg 
+	  --nsg vm-nsg 
 done
 
 for NUM in 1 2
 do
   az vm open-port -g $group --name machine$NUM --port 80 
+done
+
+for NUM in 1 2 
+do
+  az vm run-command invoke \
+    -g $group \
+    -n machine$NUM
+    --command-id RunShellScript \
+    --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
 done
