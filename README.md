@@ -9,3 +9,5 @@ Step 2 - Make changes in both server files.
 Step 3 - Run load.sh to create load balancer.
 
 Step 4 - Run delete.sh to clean all resources.
+
+end
