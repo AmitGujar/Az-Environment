@@ -1,26 +1,31 @@
 terraform {
   required_providers {
-    docker = {
-        source = "kreuzwerker/docker"
-        version = ">= 2.13.0"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
     }
   }
+
+  required_version = ">=1.1.0"
 }
 
-provider "docker" {
-  host = "npipe:////.//pipe//docker_engine"
+provider "azurerm" {
+  features {}
 }
 
-resource "docker_image" "nginx" {
-  name = "nginx:latest"
-  keep_locally = false
-}
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = "centralindia"
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.latest
-  name = "test"
-  ports {
-    internal = 80
-    external = 8000
+  tags = {
+    Environment = "Terraform Test"
+    Team = "DevOps"
   }
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  name = "terraformVnet"
+  address_space = [ "10.0.0.0/16" ]
+  location = "centralindia"
+  resource_group_name = azurerm_resource_group.rg.name
 }

@@ -28,11 +28,12 @@ do
     --size Standard_B1s \
     --image UbuntuLTS \
     --admin-username azureuser \
-    --generate-ssh-keys \
     --vnet-name vm-vnet \
     --subnet subnet \
     --availability-set vm-as \
-	  --nsg vm-nsg 
+	  --nsg vm-nsg \
+    # --generate-ssh-keys 
+    --ssh-key-value ~/.ssh/id_rsa.pub
 done
 
 # opening port 80 
