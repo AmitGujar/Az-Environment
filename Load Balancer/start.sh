@@ -32,8 +32,8 @@ do
     --subnet subnet \
     --availability-set vm-as \
 	  --nsg vm-nsg \
-    # --generate-ssh-keys 
-    --ssh-key-value ~/.ssh/id_rsa.pub
+    --generate-ssh-keys \
+    --ssh-key-values ~/.ssh/id_rsa.pub
 done
 
 # opening port 80 
