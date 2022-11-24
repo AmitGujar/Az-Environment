@@ -25,7 +25,14 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name = "terraformVnet"
-  address_space = [ "10.0.0.0/16" ]
+  address_space = [ "192.168.0.0/16" ]
   location = "centralindia"
   resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet" "my_terraform_subnet" {
+  name = "mySubnet"
+  resource_group_name = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes = ["192.168.1.0/24"]
 }
