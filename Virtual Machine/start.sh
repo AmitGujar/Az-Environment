@@ -13,21 +13,25 @@ az network vnet create \
     --address-prefixes '192.168.0.0/16' \
     --subnet-name subnet \
     --subnet-prefixes '192.168.1.0/24'
+for NUM in 1 2 3
+do
+    az vm create \
+      -n Machine$NUM \
+      -g $group \
+      -l centralindia \
+      --size Standard_B1s \
+      --image UbuntuLTS \
+      --admin-username azureuser \
+      --vnet-name vm-net \
+      --subnet subnet \
+      --generate-ssh-keys \
+      --ssh-key-values ~/.ssh/id_rsa.pub \
+done
 
-az vm create \
-    -n Machine1 \
-    -g $group \
-    -l centralindia \
-    --size Standard_B1s \
-    --image UbuntuLTS \
-    --admin-username azureuser \
-    --vnet-name vm-net \
-    --subnet subnet \
-    --generate-ssh-keys \
-    --ssh-key-values ~/.ssh/id_rsa.pub \
-
-az vm open-port -g $group --name Machine1 --port 80
-
+for NUM 1 2 3 
+do
+    az vm open-port -g $group --name Machine$NUM --port 80
+done
 status=true
 
 if $status

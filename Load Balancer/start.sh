@@ -19,14 +19,14 @@ az vm availability-set create \
   -g $group 
 
 # creating 2 virtual machines
-for NUM in 1 2
+for NUM in 1 2 3
 do
   az vm create \
     -n machine$NUM \
     -g $group \
     -l northeurope \
     --size Standard_B1s \
-    --image UbuntuLTS \
+    --image UbuntuLTS\
     --admin-username azureuser \
     --vnet-name vm-vnet \
     --subnet subnet \
@@ -43,11 +43,11 @@ do
 done
 
 # installing nginx in vms
-for NUM in 1 2 
-do
-  az vm run-command invoke \
-    -g $group \
-    -n machine$NUM \
-    --command-id RunShellScript \
-    --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
-done
+# for NUM in 1 2 
+# do
+#   az vm run-command invoke \
+#     -g $group \
+#     -n machine$NUM \
+#     --command-id RunShellScript \
+#     --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
+# done
