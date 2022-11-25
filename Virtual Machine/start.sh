@@ -33,11 +33,11 @@ for NUM in 1 2 3
 do
     az vm open-port -g $group --name Machine$NUM --port 80
 done
-status=true
+# status=true
 
-if $status
-then 
-    echo "\n Virtual Machine has been created successfully."
-else
-    echo "\n Operation Failed."
-fi
+# if $status
+# then 
+#     echo "\n Virtual Machine has been created successfully."
+# else
+#     echo "\n Operation Failed."
+# fi
