@@ -28,7 +28,7 @@ do
       --ssh-key-values ~/.ssh/id_rsa.pub \
 done
 
-for NUM 1 2 3 
+for NUM in 1 2 3 
 do
     az vm open-port -g $group --name Machine$NUM --port 80
 done
