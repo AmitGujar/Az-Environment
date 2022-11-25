@@ -33,6 +33,8 @@ az vm create \
     --generate-ssh-keys \
     --ssh-key-values ~/.ssh/id_rsa.pub \
 
+az tag add-value --name Machine --value MasterNode
+
 # creating 2 virtual machines
 for NUM in 1 2 
 do
@@ -47,7 +49,9 @@ do
     --subnet subnet \
     --generate-ssh-keys \
     --nsg vm-nsg \
-    --ssh-key-values ~/.ssh/id_rsa.pub
+    --ssh-key-values ~/.ssh/id_rsa.pub \
+  
+  az tag add-value --name Machine$NUM --value WorkerNode$NUM
 done
 
 # opening port 80 
