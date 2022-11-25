@@ -14,10 +14,8 @@ az network vnet create \
     --subnet-name subnet \
     --subnet-prefixes '192.168.1.0/24'
 
-for NUM in 1 2 3
-do
-  az vm create \
-    -n Machine$NUM \
+az vm create \
+    -n Machine1 \
     -g $group \
     -l centralindia \
     --size Standard_B1s \
@@ -27,17 +25,14 @@ do
     --subnet subnet \
     --generate-ssh-keys \
     --ssh-key-values ~/.ssh/id_rsa.pub \
-done
 
-for NUM in 1 2 3 
-do
-    az vm open-port -g $group --name Machine$NUM --port 80
-done
-# status=true
+az vm open-port -g $group --name Machine1 --port 80
 
-# if $status
-# then 
-#     echo "\n Virtual Machine has been created successfully."
-# else
-#     echo "\n Operation Failed."
-# fi
+status=true
+
+if $status
+then 
+    echo "\n Virtual Machine has been created successfully."
+else
+    echo "\n Operation Failed."
+fi
