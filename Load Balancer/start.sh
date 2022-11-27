@@ -1,8 +1,12 @@
 group=myLoadBalancer
 
+rm -r ~/.ssh
+echo "\n Generating new ssh keys.\n"
+ssh-keygen -m PEM -t rsa -b 4096
 # creating resource group for load balancer
 az group create -g $group -l northeurope
 
+echo "\nInitializing Virtual Network Creation Process.\n"
 # creating virtual network
 az network vnet create \
   -n vm-vnet \
@@ -18,8 +22,9 @@ az vm availability-set create \
   -l northeurope \
   -g $group 
 
+echo "\nInitializing VM Creation Process.\n"
 # creating 2 virtual machines
-for NUM in 1 2 3
+for NUM in 1 2 
 do
   az vm create \
     -n machine$NUM \
@@ -43,11 +48,11 @@ do
 done
 
 # installing nginx in vms
-# for NUM in 1 2 
-# do
-#   az vm run-command invoke \
-#     -g $group \
-#     -n machine$NUM \
-#     --command-id RunShellScript \
-#     --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
-# done
+for NUM in 1 2 
+do
+  az vm run-command invoke \
+    -g $group \
+    -n machine$NUM \
+    --command-id RunShellScript \
+    --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
+done

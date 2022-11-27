@@ -27,7 +27,7 @@ az vm create \
   -l centralindia \
   --size Standard_B1s \
   --image UbuntuLTS \
-  --admin-username azureuser \
+  --admin-username amitgujar \
   --vnet-name vm-net \
   --subnet subnet \
   --generate-ssh-keys \
@@ -40,7 +40,7 @@ for NUM in 1 2; do
     -g $group \
     -l centralindia \
     --size Standard_B1s \
-    --image UbuntuLTS --admin-username azureuser \
+    --image UbuntuLTS --admin-username amitgujar \
     --vnet-name vm-vnet \
     --subnet subnet \
     --generate-ssh-keys \
