@@ -25,7 +25,7 @@ az vm create \
   -n MasterNode \
   -g $group \
   -l centralindia \
-  # --size Standard_B1s \
+  --size Standard_B1s \
   --image UbuntuLTS \
   --admin-username azureuser \
   --vnet-name vm-net \
