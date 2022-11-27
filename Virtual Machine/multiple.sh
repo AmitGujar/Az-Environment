@@ -39,7 +39,7 @@ for NUM in 1 2; do
     -n WorkerNode$NUM \
     -g $group \
     -l centralindia \
-    # --size Standard_B1s \
+    --size Standard_B1s \
     --image UbuntuLTS --admin-username azureuser \
     --vnet-name vm-vnet \
     --subnet subnet \
