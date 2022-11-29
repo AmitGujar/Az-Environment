@@ -44,12 +44,12 @@ for NUM in 1 2; do
   az vm open-port -g $group --name machine$NUM --port 80
 done
 
-# installing nginx in vms
-# for NUM in 1 2
-# do
-#   az vm run-command invoke \
-#     -g $group \
-#     -n machine$NUM \
-#     --command-id RunShellScript \
-#     --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
-# done
+installing nginx in vms
+for NUM in 1 2
+do
+  az vm run-command invoke \
+    -g $group \
+    -n machine$NUM \
+    --command-id RunShellScript \
+    --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
+done
