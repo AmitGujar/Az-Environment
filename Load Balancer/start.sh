@@ -44,7 +44,7 @@ for NUM in 1 2; do
   az vm open-port -g $group --name machine$NUM --port 80
 done
 
-installing nginx in vms
+# installing nginx in vms
 for NUM in 1 2
 do
   az vm run-command invoke \
