@@ -18,7 +18,7 @@ az network vnet create \
 
 az vm availability-set create \
   -n vm-as \
-  -l northeurope \
+  -l centralindia \
   -g $group
 
 az vm create \
