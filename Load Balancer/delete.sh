@@ -1,5 +1,5 @@
 group=myLoadBalancer
-
+echo "\n Starting Resource Deletion.\n"
 az group delete -g $group -y
 status=true
 if $status
