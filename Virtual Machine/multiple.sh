@@ -25,11 +25,12 @@ az vm create \
   -n MasterNode \
   -g $group \
   -l centralindia \
-  --size Standard_B1s \
+  --size Standard_E2ds_v4 \
   --image UbuntuLTS \
   --admin-username amitgujar \
   --vnet-name vm-net \
   --subnet subnet \
+  --public-ip-sku Standard \
   --generate-ssh-keys \
   --ssh-key-values ~/.ssh/id_rsa.pub
 
@@ -39,10 +40,11 @@ for NUM in 1 2; do
     -n WorkerNode$NUM \
     -g $group \
     -l centralindia \
-    --size Standard_B1s \
+    --size Standard_E2ds_v4 \
     --image UbuntuLTS --admin-username amitgujar \
     --vnet-name vm-vnet \
     --subnet subnet \
+    --public-ip-sku Standard \
     --generate-ssh-keys \
     --nsg vm-nsg \
     --ssh-key-values ~/.ssh/id_rsa.pub
