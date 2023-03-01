@@ -30,7 +30,8 @@ for NUM in 1 2; do
     -g $group \
     -l centralindia \
     --size Standard_B1s \
-    --image UbuntuLTS --admin-username azureuser \
+    --image UbuntuLTS \
+    --admin-username azureuser \
     --vnet-name vm-vnet \
     --subnet subnet \
     --availability-set vm-as \

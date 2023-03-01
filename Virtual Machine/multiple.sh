@@ -52,15 +52,17 @@ az vm create \
   --ssh-key-values ~/.ssh/id_rsa.pub
 
 az vm open-port -g $group --name masternode --port 80
-az vm open-port -g $group --name masternode --port 6443
-az vm open-port -g $group --name masternode --port 8472
-az vm open-port -g $group --name masternode --port 10250
-az vm open-port -g $group --name masternode --port 51820
-az vm open-port -g $group --name masternode --port 51821
+
+
+# az vm open-port -g $group --name masternode --port 6443
+# az vm open-port -g $group --name masternode --port 8472
+# az vm open-port -g $group --name masternode --port 10250
+# az vm open-port -g $group --name masternode --port 51820
+# az vm open-port -g $group --name masternode --port 51821
 
 # opening port 80
 az vm open-port -g $group --name workernode --port 80
-az vm open-port -g $group --name workernode --port 8472
-az vm open-port -g $group --name workernode --port 10250
-az vm open-port -g $group --name workernode --port 51820
-az vm open-port -g $group --name workernode --port 51821
+# az vm open-port -g $group --name workernode --port 8472
+# az vm open-port -g $group --name workernode --port 10250
+# az vm open-port -g $group --name workernode --port 51820
+# az vm open-port -g $group --name workernode --port 51821
