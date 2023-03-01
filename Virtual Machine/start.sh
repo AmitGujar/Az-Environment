@@ -18,9 +18,9 @@ az vm create \
     -n Machine1 \
     -g $group \
     -l centralindia \
-    --size Standard_B1s \
+    --size Standard_D4s_v4 \
     --image UbuntuLTS \
-    --admin-username azureuser \
+    --admin-username amitgujar \
     --vnet-name vm-net \
     --subnet subnet \
     --generate-ssh-keys \
@@ -28,8 +28,14 @@ az vm create \
 
 az vm open-port -g $group --name Machine1 --port 80
 
-status=true
+az vm disk attach \
+    -n Machine1 \
+    -g $group \
+    --sku Standard_LRS \
+    --caching None \
+    --size-gb 32 \
 
+status=true
 if $status
 then 
     echo "\n Virtual Machine has been created successfully."
