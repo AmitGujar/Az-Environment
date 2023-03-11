@@ -21,11 +21,12 @@ az vm availability-set create \
   -l centralindia \
   -g $group
 
+# E2ds_v4
 az vm create \
-  -n MasterNode \
+  -n masternode \
   -g $group \
   -l centralindia \
-  --size Standard_E2ds_v4 \
+  --size Standard_B1s \
   --image UbuntuLTS \
   --admin-username amitgujar \
   --vnet-name vm-net \
@@ -33,26 +34,35 @@ az vm create \
   --public-ip-sku Standard \
   --generate-ssh-keys \
   --ssh-key-values ~/.ssh/id_rsa.pub
-
+  
+#D2ds_v4
 # creating 2 virtual machines
-for NUM in 1 2; do
-  az vm create \
-    -n WorkerNode$NUM \
-    -g $group \
-    -l centralindia \
-    --size Standard_E2ds_v4 \
-    --image UbuntuLTS --admin-username amitgujar \
-    --vnet-name vm-vnet \
-    --subnet subnet \
-    --public-ip-sku Standard \
-    --generate-ssh-keys \
-    --nsg vm-nsg \
-    --ssh-key-values ~/.ssh/id_rsa.pub
-done
+az vm create \
+  -n workernode \
+  -g $group \
+  -l centralindia \
+  --size Standard_B1s \
+  --image UbuntuLTS \
+  --admin-username amitgujar \
+  --vnet-name vm-vnet \
+  --subnet subnet \
+  --public-ip-sku Standard \
+  --generate-ssh-keys \
+  --nsg vm-nsg \
+  --ssh-key-values ~/.ssh/id_rsa.pub
 
-az vm open-port -g $group --name MasterNode --port 80
+az vm open-port -g $group --name masternode --port 80
+
+
+# az vm open-port -g $group --name masternode --port 6443
+# az vm open-port -g $group --name masternode --port 8472
+# az vm open-port -g $group --name masternode --port 10250
+# az vm open-port -g $group --name masternode --port 51820
+# az vm open-port -g $group --name masternode --port 51821
 
 # opening port 80
-for NUM in 1 2; do
-  az vm open-port -g $group --name WorkerNode$NUM --port 80
-done
+az vm open-port -g $group --name workernode --port 80
+# az vm open-port -g $group --name workernode --port 8472
+# az vm open-port -g $group --name workernode --port 10250
+# az vm open-port -g $group --name workernode --port 51820
+# az vm open-port -g $group --name workernode --port 51821
