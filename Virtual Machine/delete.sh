@@ -5,16 +5,16 @@ az group delete -g $group -y
 status=true
 if $status
 then
-    echo "\n Deleted myLinuxResource.\n"
+    echo "Deleted myLinuxResource."
 else 
-    echo "\n Failed to delete.\n"
+    echo "Failed to delete."
 fi
 
 az group delete --name NetworkWatcherRG -y
 status=true
 if $status
 then 
-    echo "\n Deleted NetworkWatcherRG.\n"
+    echo "Deleted NetworkWatcherRG"
 else 
-    echo "\n Failed to Delete.\n"
+    echo "Failed to Delete."
 fi
