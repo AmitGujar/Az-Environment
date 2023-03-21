@@ -1,4 +1,4 @@
-group=myLoadBalancer
+group=AmitRG
 
 # Setting up public ip for load balancer
 az network public-ip create \

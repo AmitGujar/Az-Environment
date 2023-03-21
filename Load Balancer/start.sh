@@ -1,4 +1,4 @@
-group=myLoadBalancer
+group=AmitRG
 
 rm -r ~/.ssh
 echo "\n Generating new ssh keys.\n"
@@ -54,10 +54,3 @@ do
     --command-id RunShellScript \
     --script "sudo apt-get update || upgrade && sudo apt install nginx -y"
 done
-
-az vm run-command invoke \
-  -g $group \
-  -n Machine1 \
-  --command-id RunShellScript \
-  --script "sudo su" \
-  --script "echo \"<h1>Server Started</h1>\" >> "/var/www/html/index.nginx-debian.html"
