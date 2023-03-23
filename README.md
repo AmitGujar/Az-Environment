@@ -1,13 +1,22 @@
-# Az-Environment
+## Use these scripts to automate tasks on Microsoft Azure
 
-### Use this script to create standard load balancer in azure.
 
-Step 1 - Run start.sh to create 2 vms with nginx server.
+### Use Virtual Machine folder to create the no. of machines with desired image size.
 
-Step 2 - Make changes in both server files.
+```
+./start.sh [size of vm] 
 
-Step 3 - Run load.sh to create load balancer.
+./start.sh D2s_v3
 
-Step 4 - Run delete.sh to clean all resources.
+```
+If you don't specify the size then it will take Standard_B1s as the image size.
 
-....
+### Use Load Balancer script to create standard load balancer in azure.
+
+Run start.sh to create 2 vms with nginx server.
+
+Make changes in both server files.
+
+Run load.sh to create load balancer.
+
+Run delete.sh to clean all resources.
