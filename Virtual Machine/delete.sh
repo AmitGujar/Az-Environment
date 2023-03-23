@@ -1,20 +1,19 @@
-group=myLinuxResource
-echo "\n Starting Resource Deletion.\n"
+group=AmitRG
 
-az group delete -g $group -y
-status=true
-if $status
-then
-    echo "Deleted myLinuxResource."
-else 
-    echo "Failed to delete."
-fi
+echo "\nResource deletion may take a while..."
 
-az group delete --name NetworkWatcherRG -y
-status=true
-if $status
-then 
-    echo "Deleted NetworkWatcherRG"
-else 
-    echo "Failed to Delete."
-fi
+az group delete -g $group -y 2> /dev/null
+
+resource_delete() {
+    if [ $? -ne 0 ]; then
+        echo "Failed to delete the resource $group"
+        exit 1
+    else
+        echo "Resource deleted successfully"
+    fi
+}
+resource_delete
+
+group=NetworkWatcherRG
+az group delete --name NetworkWatcherRG -y 2> /dev/null
+resource_delete

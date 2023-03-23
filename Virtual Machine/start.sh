@@ -1,6 +1,13 @@
 group=AmitRG
 size=$1
-groupid=/subscriptions/9d08fcd9-b6df-4a2f-9697-0414d8838111/resourceGroups/AmitRG
+groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG
+
+read -p "How many machines you want to create? = " instance
+
+if [ -z $instance ] || [ $instance -eq 0 ]; then 
+    echo "\nNo size is provided, Please specify the size and Try Again."
+    exit 1
+fi
 
 rm -r ~/.ssh
 echo "\n Generating new ssh keys.\n"
@@ -24,60 +31,43 @@ if [ -z $size ]; then
 	size=B1s
 fi
 
-read -p "How many machines you want to create? = " instance
-
-if [ $instance==0 ]; then 
-    echo "\nNo size is provided, Creating default 1 Machine"
-    instance=1
-fi
-
+vm_create() {
 for i in $(seq 1 $instance);
 do 
- az vm create \
-   -n Machine$i \
-   -g $group \
-   -l centralindia \
-   --size Standard_$size \
-   --image UbuntuLTS \
-   --admin-username amitgujar \
-   --vnet-name vm-net \
-   --subnet subnet \
-   --public-ip-sku Standard \
-   --generate-ssh-keys \
-   --ssh-key-values ~/.ssh/id_rsa.pub 
-done
-
-# az vm open-port -g $group --name Machine1 --port 80
-for i in $(seq 1 $instance);
-do
+    az vm create \
+        -n Machine$i \
+        -g $group \
+        -l centralindia \
+        --size Standard_$size \
+        --image UbuntuLTS \
+        --admin-username amitgujar \
+        --vnet-name vm-net \
+        --subnet subnet \
+        --public-ip-sku Standard \
+        --generate-ssh-keys \
+        --ssh-key-values ~/.ssh/id_rsa.pub 
+    
     az vm open-port -g $group -n Machine$i --port 80
 done
+}
+vm_create
 
+update_vm() {
 for i in $(seq 1 $instance);
 do 
     az vm run-command invoke \
-     -g $group \
-     -n Machine$i
-     --command-id RunShellScript \
-     --script "sudo apt update -y" 
+        -g $group \
+        -n Machine$i \
+        --command-id RunShellScript \
+        --script "sudo apt update -y" 
 done
+}
+update_vm
 
-# az vm create \
-#     -n Machine1 \
+# az vm disk attach \
+#     --vm-name Machine1 \
+#     --name Machine1_disk --new \
 #     -g $group \
-#     -l centralindia \
-#     --size Standard_$size \
-#     --image UbuntuLTS \
-#     --admin-username amitgujar \
-#     --vnet-name vm-net \
-#     --subnet subnet \
-#     --generate-ssh-keys \
-#     --ssh-key-values ~/.ssh/id_rsa.pub \
-
-#az vm disk attach \
-#   --vm-name Machine1 \
-#    --name Machine1_disk --new \
-#   -g $group \
-#    --sku Premium_LRS \
-#    --caching None \
-#    --size-gb 32 \
+#     --sku Premium_LRS \
+#     --caching None \
+#     --size-gb 32 
