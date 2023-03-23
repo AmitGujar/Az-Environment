@@ -7,7 +7,6 @@
 ./start.sh [size of vm] 
 
 ./start.sh D2s_v3
-
 ```
 If you don't specify the size then it will take Standard_B1s as the image size.
 
