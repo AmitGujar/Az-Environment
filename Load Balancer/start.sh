@@ -1,20 +1,30 @@
 group=AmitRG
+size=$1
+groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG
+
+read -p "How many machines you want to create? = " instance
+
+if [ -z $instance ] || [ $instance -eq 0 ]; then 
+    echo "\nNo size is provided, Please specify the size and Try Again."
+    exit 1
+fi
 
 rm -r ~/.ssh
 echo "\n Generating new ssh keys.\n"
 ssh-keygen -m PEM -t rsa -b 4096
-# creating resource group for load balancer
+
+echo "\nInitializing VM Creation Process.\n"
 az group create -g $group -l centralindia
 
-echo "\nInitializing Virtual Network Creation Process.\n"
-# creating virtual network
+az tag create --resource-id $groupid --tags Exp=7 Status=Normal
+
 az network vnet create \
-  -n vm-vnet \
-  -g $group \
-  -l centralindia \
-  --address-prefixes '192.168.0.0/16' \
-  --subnet-name subnet \
-  --subnet-prefixes '192.168.1.0/24'
+    -n vm-net \
+    -g $group \
+    -l centralindia \
+    --address-prefixes '192.168.0.0/16' \
+    --subnet-name subnet \
+    --subnet-prefixes '192.168.0.0/24'
 
 # setting up availability set
 az vm availability-set create \
@@ -22,30 +32,34 @@ az vm availability-set create \
   -l centralindia \
   -g $group
 
-echo "\nInitializing VM Creation Process.\n"
-# creating 2 virtual machines
-for NUM in 1 2; do
-  az vm create \
-    -n machine$NUM \
-    -g $group \
-    -l centralindia \
-    --size Standard_B1s \
-    --image UbuntuLTS \
-    --admin-username azureuser \
-    --vnet-name vm-vnet \
-    --subnet subnet \
-    --availability-set vm-as \
-    --nsg vm-nsg \
-    --generate-ssh-keys \
-    --ssh-key-values ~/.ssh/id_rsa.pub
-done
+if [ -z $size ]; then 
+	echo "\nNo size is provided, Using default size Standard_B1s for machine"
+	size=B1s
+fi
 
-# opening port 80
-for NUM in 1 2; do
-  az vm open-port -g $group --name machine$NUM --port 80
+vm_create() {
+for i in $(seq 1 $instance); 
+do 
+    az vm create \
+        -n Machine$i \
+        -g $group \
+        -l centralindia \
+        --size Standard_$size \
+        --image UbuntuLTS \
+        --admin-username amitgujar \
+        --vnet-name vm-net \
+        --subnet subnet \
+        --public-ip-address "" \
+        --availability-set vm-as \
+        --nsg vm-nsg \
+        --generate-ssh-keys \
+        --ssh-key-values ~/.ssh/id_rsa.pub 
+    
+    az vm open-port -g $group -n Machine$i --port 80
 done
+}
+vm_create
 
-# installing nginx in vms
 for NUM in 1 2
 do
   az vm run-command invoke \

@@ -1,29 +1,19 @@
-group=myLoadBalancer
-echo "\n Starting Resource Deletion.\n"
-az group delete -g $group -y
-status=true
-if $status
-then
-    echo "\n Deleted myLoadBalancer Successfully. \n"
-else 
-    echo "\n Operation Failed."
-fi
+group=AmitRG
 
-az group delete --name NetworkWatcherRG -y
-status=true
-if $status
-then
-    echo "\n Deleted NetWorkWatcherRG.\n"
-else 
-    echo "\n Operation Failed"
-fi
+echo "\nResource deletion may take a while..."
 
-# az group delete --name cloud-shell-storage-centralindia -y
-# status=true
-# if $status
-# then 
-#     echo "\n Deleted Terminal Storage."
-# else 
-#     echo "\n Storage resource doesn't exists."
-# fi
-az group list
+az group delete -g $group -y 2> /dev/null
+
+resource_delete() {
+    if [ $? -ne 0 ]; then
+        echo "Failed to delete the resource $group"
+        exit 1
+    else
+        echo "Resource deleted successfully"
+    fi
+}
+resource_delete
+
+group=NetworkWatcherRG
+az group delete --name NetworkWatcherRG -y 2> /dev/null
+resource_delete
