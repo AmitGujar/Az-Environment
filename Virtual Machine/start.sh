@@ -76,7 +76,8 @@ update_vm
 az vm list-ip-addresses -n Machine1 -g AmitRG | grep ipAddress | cut -d':' -f2
 
 publicIp=$(az vm list-ip-addresses -n cronMachine -g AmitRG | grep ipAddress | cut -d':' -f2 | tr -d '",')
-echo " Machine is ready on \"ssh autoamitgujar@$publicIp\""
+
+echo Machine is ready on \"ssh autoamitgujar@$publicIp\"
 
 # az vm disk attach \
 #     --vm-name Machine1 \
