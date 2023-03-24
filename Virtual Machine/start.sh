@@ -1,6 +1,5 @@
 group=AmitRG
 size=$1
-groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG
 
 read -p "How many machines you want to create? = " instance
 
@@ -9,13 +8,23 @@ if [ -z $instance ] || [ $instance -eq 0 ]; then
     exit 1
 fi
 
-rm -r ~/.ssh
-echo "\n Generating new ssh keys.\n"
-ssh-keygen -m PEM -t rsa -b 4096
+generate_keys() {
+    if [ -f ~/.ssh/id_rsa ]; then
+        echo "SSH keys already exist, Deleting...."
+        rm -rf ~/.ssh
+    fi
+    
+    echo "\n Generating new ssh keys.\n"
+    yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+}
+generate_keys
 
 echo "\nInitializing VM Creation Process.\n"
 az group create -g $group -l centralindia
 
+# groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG 
+
+groupid=groupid=/subscriptions/0d3ce63c-abaa-48ae-bbe1-f582cea576b9/resourceGroups/AmitRG
 az tag create --resource-id $groupid --tags Exp=7 Status=Normal
 
 az network vnet create \
@@ -63,6 +72,11 @@ do
 done
 }
 update_vm
+
+az vm list-ip-addresses -n Machine1 -g AmitRG | grep ipAddress | cut -d':' -f2
+
+publicIp=$(az vm list-ip-addresses -n cronMachine -g AmitRG | grep ipAddress | cut -d':' -f2 | tr -d '",')
+echo " Machine is ready on \"ssh autoamitgujar@$publicIp\""
 
 # az vm disk attach \
 #     --vm-name Machine1 \

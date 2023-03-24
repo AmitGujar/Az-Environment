@@ -1,6 +1,7 @@
 group=AmitRG
 size=$1
-groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG
+#groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRGStudent 
+groupid=/subscriptions/0d3ce63c-abaa-48ae-bbe1-f582cea576b9/resourceGroups/AmitRG
 
 read -p "How many machines you want to create? = " instance
 
@@ -9,9 +10,16 @@ if [ -z $instance ] || [ $instance -eq 0 ]; then
     exit 1
 fi
 
-rm -r ~/.ssh
-echo "\n Generating new ssh keys.\n"
-ssh-keygen -m PEM -t rsa -b 4096
+generate_keys() {
+    if [ -f ~/.ssh/id_rsa ]; then
+        echo "SSH keys already exist, Deleting...."
+        rm -rf ~/.ssh
+    fi
+    
+    echo "\n Generating new ssh keys.\n"
+    yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+}
+generate_keys
 
 echo "\nInitializing VM Creation Process.\n"
 az group create -g $group -l centralindia
