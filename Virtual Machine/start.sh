@@ -24,7 +24,7 @@ az network vnet create \
     -l centralindia \
     --address-prefixes '192.168.0.0/16' \
     --subnet-name subnet \
-    --subnet-prefixes '192.168.1.0/24'
+    --subnet-prefixes '192.168.0.0/24'
 
 if [ -z $size ]; then 
 	echo "\nNo size is provided, Using default size Standard_B1s for machine"
