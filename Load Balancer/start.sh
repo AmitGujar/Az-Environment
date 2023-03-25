@@ -49,7 +49,7 @@ vm_create() {
 for i in $(seq 1 $instance); 
 do 
     az vm create \
-        -n Machine$i \
+        -n machine$i \
         -g $group \
         -l centralindia \
         --size Standard_$size \
