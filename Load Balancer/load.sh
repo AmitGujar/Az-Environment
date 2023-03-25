@@ -1,5 +1,7 @@
 group=AmitRG
 
+read -p "How many NAT rule you want to create? = " instance
+
 # Setting up public ip for load balancer
 az network public-ip create \
   -g $group \
@@ -49,3 +51,20 @@ az network nic ip-config address-pool add \
   --nic-name machine2VMNic \
   -g $group \
   --lb-name myLoadBalancer
+
+
+for i in $(seq 1 $instance); 
+do 
+  az network lb inbound-nat-rule create \
+    -g $group \
+    --lb-name myLoadBalancer \
+    -n MyNatRule$i \
+    --protocol Tcp \
+    --frontend-port 400$i \
+    --backend-port 22 \
+    --frontend-ip myFrontEnd     
+done
+
+az network lb frontend-ip list \
+  --lb-name myLoadBalancer \
+  -g $group
