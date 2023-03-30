@@ -20,12 +20,15 @@ generate_keys() {
 generate_keys
 
 echo "\nInitializing VM Creation Process.\n"
-az group create -g $group -l centralindia
+
+az group create -g $group -l centralindia 2> /dev/null
+if [ $? -ne 0 ]; then
+    az group create -g group -l centralindia
+fi
 
 # groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG 
-
-groupid=groupid=/subscriptions/0d3ce63c-abaa-48ae-bbe1-f582cea576b9/resourceGroups/AmitRG
-az tag create --resource-id $groupid --tags Exp=7 Status=Normal
+# groupid=/subscriptions/052c9332-2138-411f-adef-e7445d02ecc6/resourceGroups/AmitRG
+# az tag create --resource-id $groupid --tags Exp=7 Status=Normal
 
 az network vnet create \
     -n vm-net \
@@ -69,15 +72,17 @@ do
         -n Machine$i \
         --command-id RunShellScript \
         --script "sudo apt update -y" 
+
 done
 }
+
 update_vm
 
 az vm list-ip-addresses -n Machine1 -g AmitRG | grep ipAddress | cut -d':' -f2
 
 publicIp=$(az vm list-ip-addresses -n cronMachine -g AmitRG | grep ipAddress | cut -d':' -f2 | tr -d '",')
 
-echo " Machine is ready on \"ssh autoamitgujar@$publicIp\" "
+echo Machine is ready on \"ssh amitgujar@$publicIp\"
 
 # az vm disk attach \
 #     --vm-name Machine1 \
