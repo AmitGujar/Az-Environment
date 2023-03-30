@@ -11,6 +11,7 @@ az network public-ip create \
 az network lb create \
   -g $group \
   --name myLoadBalancer \
+  --sku Standard \
   --public-ip-address myPublicIP \
   --frontend-ip-name myFrontEnd \
   --backend-pool-name myBackendPool 

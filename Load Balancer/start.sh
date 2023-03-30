@@ -35,10 +35,10 @@ az network vnet create \
     --subnet-prefixes '192.168.0.0/24'
 
 # setting up availability set
-az vm availability-set create \
-  -n vm-as \
-  -l centralindia \
-  -g $group
+# az vm availability-set create \
+#   -n vm-as \
+#   -l centralindia \
+#   -g $group
 
 if [ -z $size ]; then 
 	echo "\nNo size is provided, Using default size Standard_B1s for machine"
@@ -58,7 +58,7 @@ do
         --vnet-name vm-net \
         --subnet subnet \
         --public-ip-address "" \
-        --availability-set vm-as \
+        # --availability-set vm-as \
         --nsg vm-nsg \
         --generate-ssh-keys \
         --ssh-key-values ~/.ssh/id_rsa.pub 
