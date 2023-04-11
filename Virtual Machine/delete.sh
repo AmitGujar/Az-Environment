@@ -2,7 +2,7 @@ group=AmitRG
 
 echo "\nResource deletion may take a while..."
 
-az group delete -g $group -y 2> /dev/null
+az group delete -g $group -y --no-wait 2> /dev/null
 
 resource_delete() {
     if [ $? -ne 0 ]; then
@@ -15,5 +15,7 @@ resource_delete() {
 resource_delete
 
 group=NetworkWatcherRG
-az group delete --name NetworkWatcherRG -y 2> /dev/null
+az group delete --name NetworkWatcherRG -y --no-wait 2> /dev/null
 resource_delete
+
+az group list | grep provisioningState
