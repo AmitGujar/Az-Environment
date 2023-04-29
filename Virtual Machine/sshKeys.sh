@@ -1,5 +1,4 @@
 #! /bin/bash
-
 group=AmitRG
 
 az sshkey create \

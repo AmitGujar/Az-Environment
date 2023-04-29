@@ -17,5 +17,3 @@ resource_delete
 group=NetworkWatcherRG
 az group delete --name NetworkWatcherRG -y --no-wait 2> /dev/null
 resource_delete
-
-az group list | grep provisioningState
