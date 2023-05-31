@@ -3,5 +3,5 @@ group=AmitRG
 
 az sshkey create \
     -n "Laptop_Keys" \
-    --public-key "@/home/amitdg/.windowSsh/windows.pub" \
+    --public-key "@/home/amitdg/.windowsKey/windows.pub" \
     -g $group

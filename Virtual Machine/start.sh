@@ -26,10 +26,6 @@ if [ $? -ne 0 ]; then
     az group create -g group -l centralindia
 fi
 
-# groupid=/subscriptions/4086ee36-d2b5-4797-adef-ad1144340909/resourceGroups/AmitRG 
-# groupid=/subscriptions/052c9332-2138-411f-adef-e7445d02ecc6/resourceGroups/AmitRG
-# az tag create --resource-id $groupid --tags Exp=7 Status=Normal
-
 az network vnet create \
     -n vm-net \
     -g $group \
@@ -81,11 +77,3 @@ update_vm
 az vm list-ip-addresses -n Machine1 -g AmitRG | grep ipAddress | cut -d':' -f2
 
 sh ./connect.sh
-
-# az vm disk attach \
-#     --vm-name Machine1 \
-#     --name Machine1_disk --new \
-#     -g $group \
-#     --sku Premium_LRS \
-#     --caching None \
-#     --size-gb 32 
