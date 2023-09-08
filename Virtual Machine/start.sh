@@ -1,4 +1,4 @@
-group=AmitRG
+group=TestRG
 size=$1
 
 read -p "How many machines you want to create? = " instance
@@ -74,6 +74,13 @@ done
 
 update_vm
 
-az vm list-ip-addresses -n Machine1 -g AmitRG | grep ipAddress | cut -d':' -f2
+vm_listIpAddress() {
+for i in $(seq 1 $instance);
+do
+    az vm list-ip-addresses \
+    -n Machine$i \
+    -g TestRG | grep ipAddress | cut -d':' -f2
+done
+}
 
-sh ./connect.sh
+vm_listIpAddress
