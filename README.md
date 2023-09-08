@@ -18,4 +18,4 @@ Make changes in both server files.
 
 Run load.sh to create load balancer.
 
-Run delete.sh to clean all resources.
+Run delete.sh to clean all resources..
