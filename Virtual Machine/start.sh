@@ -1,4 +1,4 @@
-group=TestRG
+group=AmitRG
 size=$1
 
 read -p "How many machines you want to create? = " instance
@@ -47,7 +47,7 @@ do
         -g $group \
         -l centralindia \
         --size Standard_$size \
-        --image UbuntuLTS \
+        --image Ubuntu2204 \
         --admin-username amitgujar \
         --vnet-name vm-net \
         --subnet subnet \
@@ -79,7 +79,7 @@ for i in $(seq 1 $instance);
 do
     az vm list-ip-addresses \
     -n Machine$i \
-    -g TestRG | grep ipAddress | cut -d':' -f2
+    -g $group | grep ipAddress | cut -d':' -f2
 done
 }
 
