@@ -1,30 +1,40 @@
-group=AmitRG
+#group=TestRG
 size=$1
 
 read -p "How many machines you want to create? = " instance
 
-if [ -z $instance ] || [ $instance -eq 0 ]; then 
-    echo "\nNo size is provided, Please specify the size and Try Again."
+if [ -z $instance ] || [ $instance -eq 0 ]; then
+    echo "No size is provided, Please specify the size and Try Again."
     exit 1
 fi
+
+read -p "Enter the resource group name = " group
 
 generate_keys() {
     if [ -f ~/.ssh/id_rsa ]; then
         echo "SSH keys already exist, Deleting...."
         rm -rf ~/.ssh
     fi
-    
-    echo "\n Generating new ssh keys.\n"
+
+    echo "Generating new ssh keys."
     yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
 }
 generate_keys
 
-echo "\nInitializing VM Creation Process.\n"
+echo "Initializing VM Creation Process."
 
 az group create -g $group -l centralindia 2> /dev/null
 if [ $? -ne 0 ]; then
     az group create -g group -l centralindia
 fi
+
+tag_addition() {
+    az group show -g $group | grep id | cut -d':' -f2  >> resource_id.txt
+    resource_id=$(cat resource_id.txt | sed 's/["\,]//g')
+    az tag create --resource-id $resource_id --tags Exp=3
+    rm -rf resource_id.txt
+}
+tag_addition
 
 az network vnet create \
     -n vm-net \
@@ -35,7 +45,7 @@ az network vnet create \
     --subnet-prefixes '192.168.0.0/24'
 
 if [ -z $size ]; then 
-	echo "\nNo size is provided, Using default size Standard_B1s for machine"
+	echo "No size is provided, Using default size Standard_B1s for machine"
 	size=B1s
 fi
 
