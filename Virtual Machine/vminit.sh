@@ -63,7 +63,7 @@ do
         --subnet subnet \
         --public-ip-sku Standard \
         --generate-ssh-keys \
-        --ssh-key-values ~/.ssh/id_rsa.pub 
+        --ssh-key-values ~/.ssh/id_rsa.pub
     
     az vm open-port -g $group -n Machine$i --port 80
 done
