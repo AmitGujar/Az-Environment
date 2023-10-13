@@ -1,4 +1,4 @@
-#group=TestRG
+#!/bin/bash
 size=$1
 
 read -p "How many machines you want to create? = " instance
@@ -12,12 +12,12 @@ read -p "Enter the resource group name = " group
 
 generate_keys() {
     if [ -f ~/.ssh/id_rsa ]; then
-        echo "SSH keys already exist, Deleting...."
-        rm -rf ~/.ssh
+        echo "SSH keys already exist...."
+        # rm -rf ~/.ssh
+    else 
+        echo "Generating new ssh keys."
+        yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
     fi
-
-    echo "Generating new ssh keys."
-    yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
 }
 generate_keys
 
