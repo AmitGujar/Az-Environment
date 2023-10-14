@@ -27,5 +27,4 @@ steps:
     azureSubscription: 'DevOps-002'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az group delete -n TestRG'
-    arguments: '-y --no-wait'
+    inlineScript: 'az group delete -n TestRG -y'
