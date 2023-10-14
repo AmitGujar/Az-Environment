@@ -1,6 +1,12 @@
 <<<<<<< Updated upstream:Virtual Machine/vminit.sh
+<<<<<<< Updated upstream:Virtual Machine/vminit.sh
 #!/bin/bash
 size=$1
+=======
+#group=TestRG
+size=$2
+group=$1
+>>>>>>> Stashed changes:Virtual Machine/start.sh
 =======
 #group=TestRG
 size=$2
