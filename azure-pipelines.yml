@@ -13,7 +13,19 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'DevOps-002'
+    scriptType: 'bash'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'Virtual Machine/vminit.sh'
+    arguments: 'TestRG'
+    addSpnToEnvironment: true
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'DevOps-002'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az group delete -n TestRG'
+    arguments: '-y --no-wait'
