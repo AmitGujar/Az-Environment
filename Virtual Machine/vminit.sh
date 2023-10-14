@@ -1,5 +1,11 @@
+<<<<<<< Updated upstream:Virtual Machine/vminit.sh
 #!/bin/bash
 size=$1
+=======
+#group=TestRG
+size=$2
+group=$1
+>>>>>>> Stashed changes:Virtual Machine/start.sh
 
 read -p "How many machines you want to create? = " instance
 
@@ -8,7 +14,12 @@ if [ -z $instance ] || [ $instance -eq 0 ]; then
     exit 1
 fi
 
-read -p "Enter the resource group name = " group
+if [ -z $group ]; then
+    echo "No resource group name is provided, Please specify the name and Try Again."
+else
+    read -p "Enter name for resource group = " group
+    echo "Resource group name is provided, Using $group as resource group name."
+fi
 
 generate_keys() {
     if [ -f ~/.ssh/id_rsa ]; then
@@ -19,7 +30,7 @@ generate_keys() {
         yes "" | ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
     fi
 }
-generate_keys
+# generate_keys
 
 echo "Initializing VM Creation Process."
 
@@ -40,7 +51,7 @@ az network vnet create \
     -n vm-net \
     -g $group \
     -l centralindia \
-    --address-prefixes '192.168.0.0/16' \
+    --address-prefixes '192.13368.0.0/16' \
     --subnet-name subnet \
     --subnet-prefixes '192.168.0.0/24'
 
