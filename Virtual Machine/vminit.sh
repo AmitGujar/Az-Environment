@@ -1,13 +1,13 @@
 #!/bin/bash
 
-size=$2
-group=$1
-
-read -p "How many machines you want to create? = " instance
+size=$3
+group=$2
+instance=$1
 
 if [ -z $instance ] || [ $instance -eq 0 ]; then
-    echo "No size is provided, Please specify the size and Try Again."
-    exit 1
+    read -p "How many machines you want to create? = " instance
+else
+    echo "Creating $instance machines."
 fi
 
 if [ -z $group ]; then
