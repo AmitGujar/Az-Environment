@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $HOME/Desktop/Az-Environment/Virtual\ Machine/ntfy_alert.sh
+
 size=$3
 group=$2
 instance=$1
@@ -74,6 +76,8 @@ vm_create() {
     done
 }
 vm_create
+
+send_alert "Connect to vm using ssh 🥳"
 
 update_vm() {
     for i in $(seq 1 $instance); do
