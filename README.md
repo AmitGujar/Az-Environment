@@ -1,5 +1,5 @@
 ## Use these scripts to automate tasks on Microsoft Azure
-
+test
 
 ### Use Virtual Machine folder to create the no. of machines with desired image size.
 
