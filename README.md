@@ -10,7 +10,7 @@ test
 ```
 If you want to go with the default values 
 ```
-https://raw.githubusercontent.com/AmitGujar/Az-Environment/main/Virtual%20Machine/vminit.sh | bash
+curl -o- https://raw.githubusercontent.com/AmitGujar/Az-Environment/main/Virtual%20Machine/vminit.sh | bash
 ```
 
 ### Use Load Balancer script to create public basic load balancer in azure.
